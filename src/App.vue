@@ -1,14 +1,36 @@
 <template>
   <div class="myParentComponent">
-    <TamagotchiCard name="Pluto" species="Saint-Hubert" pictureUrl="https://resize-gulli.jnsmedia.fr/r/890,__ym__/img//var/jeunesse/storage/images/gulli/chaine-tv/dessins-animes/pokemon/pokemon/pikachu/26571681-1-fre-FR/Pikachu.jpg"/>
+    <TamagotchiCard 
+      :name="myVillager[0].name"
+      :species="myVillager[0].species"
+      :pictureUrl="myVillager[0].image_url"/>
   </div>
 </template>
 
 <script>
 import TamagotchiCard from '@/components/Tamagotchi.vue'
+import { getAVillager } from '@/services/api/villagerAPI'
 
 export default {
   name: 'myParentComponent',
-  components: { TamagotchiCard }
-}
+  components: { TamagotchiCard },
+  data() {
+      return {
+        myVillager: {}
+      }
+    },
+    created: function() {
+      this.retrieveAVillager("Lulu")
+    },
+    methods: {
+      async retrieveAVillager(name) {
+        try {
+          this.myVillager = await getAVillager(name)
+          console.log(this.myVillager)
+        } catch (error) {
+          console.error('Error fetching villager data:', error.message)
+        }
+      }
+    }
+  };
 </script>
