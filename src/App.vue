@@ -1,5 +1,7 @@
 <template>
   <div class="myParentComponent">
+    <button @click="retrieveRandomVillager">Random Villager</button>
+    <button @click="retrieveAVillager('Lulu')">Villager Lulu</button>
     <TamagotchiCard 
       :name="myVillager[0].name"
       :species="myVillager[0].species"
@@ -9,14 +11,15 @@
 
 <script>
 import TamagotchiCard from '@/components/Tamagotchi.vue'
-import { getAVillager } from '@/services/api/villagerAPI'
+import { getVillagers, getAVillager } from '@/services/api/villagerAPI'
 
 export default {
   name: 'myParentComponent',
   components: { TamagotchiCard },
   data() {
       return {
-        myVillager: {}
+        myVillager: {},
+        villagers: []
       }
     },
     created: function() {
@@ -26,11 +29,21 @@ export default {
       async retrieveAVillager(name) {
         try {
           this.myVillager = await getAVillager(name)
-          console.log(this.myVillager)
         } catch (error) {
           console.error('Error fetching villager data:', error.message)
         }
-      }
+      },
+      async retrieveRandomVillager() {
+        try {
+          if(this.villagers.length == 0)
+            this.villagers = await getVillagers()
+          const randomIndex = Math.floor(Math.random() * this.villagers.length);
+          const randomVillager = this.villagers[randomIndex];
+          this.retrieveAVillager(randomVillager.name);
+        } catch (error) {
+          console.error('Error fetching random villager data:', error.message);
+        }
+    }
     }
   };
 </script>
