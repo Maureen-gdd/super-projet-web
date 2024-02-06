@@ -1,6 +1,6 @@
 <template>
   <div class="myParentComponent">
-    <button @click="retrieveRandomVillager">Random Villager</button>
+    <v-btn color="rgba(255, 0, 0, 0.5)" @click="retrieveRandomVillager">Random Villager</v-btn>
     <button @click="retrieveAVillager('Lulu')">Villager Lulu</button>
     <TamagotchiCard 
       :name="myVillager[0].name"
