@@ -1,10 +1,10 @@
 <template>
     <div class="tamagotchi-card">
       <div>
-        <h2 class="name">{{name}}</h2>
+        <h2 class="name text-[2rem]">{{name}}</h2>
         <p class="species">{{species}}</p>
       </div> 
-      <img class="picture" v-bind:src="pictureUrl"/> 
+      <img class="picture w-64 h-64" v-bind:src="pictureUrl"/> 
     </div>
 </template>
   
@@ -18,12 +18,3 @@
     }
   }
 </script>
-
-<style scoped>
-    .tamagotchi-card {
-        display: flex;
-    }
-    h2 {
-        font-size: 20px;
-    }
-</style>
